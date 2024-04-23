@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Apr 23, 2024 at 10:42 AM
+-- Generation Time: Apr 23, 2024 at 12:27 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -57,7 +57,8 @@ CREATE TABLE `utente` (
   `codice_fiscale` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
   `credito` int(11) NOT NULL,
-  `ID_bicicletta` int(11) DEFAULT NULL
+  `ID_bicicletta` int(11) DEFAULT NULL,
+  `mail` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
