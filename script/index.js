@@ -8,14 +8,32 @@ function login() {
         },
         success: function(data) {
             if (data == "success") {
-                console.log("Login success");
+                window.location.href = "pages/home.html";
             } else {
                 alert(data);
             }
         }
     })
 }
+function register(){
+    $.ajax({
+        type: "POST",
+        url: "../ajax/register.php",
+        data: {
+            email: $("#mail-reg").val(),
+            cod_f: $("#codfiscale").val(),
+            password: $("#password-reg").val()
+        },
+        success: function(data) {
+            if (data == "success") {
+                alert("Register success");
+            } else {
+                alert(data);
+            }
+        }
+    })
 
+}
 
 $(document).ready(function() {
     // Hide the divs initially
@@ -49,4 +67,7 @@ $(document).ready(function() {
         login();
     });
 
+    $("btn-register").click(function() {
+        register();
+    });
 });

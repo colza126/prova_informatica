@@ -25,7 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $sql = "INSERT INTO utente (mail, password,codice_fiscale) VALUES ('$mail', '$password','$cod')";
 
     if ($conn->query($sql) === TRUE) {
-        $response['status'] = 'success';
+        $response['status'] = 'success';    
     } else {
         $response['status'] = 'fail';
     }
