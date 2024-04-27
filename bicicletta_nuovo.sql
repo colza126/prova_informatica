@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Apr 23, 2024 at 12:27 PM
+-- Generation Time: Apr 27, 2024 at 09:05 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -38,12 +38,41 @@ CREATE TABLE `bicicletta` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `indirizzo`
+--
+
+CREATE TABLE `indirizzo` (
+  `ID` int(11) NOT NULL,
+  `via` varchar(255) NOT NULL,
+  `citta` varchar(255) NOT NULL,
+  `cap` int(11) NOT NULL,
+  `provincia` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `operazione`
+--
+
+CREATE TABLE `operazione` (
+  `ID` int(11) NOT NULL,
+  `tipo` enum('prelievo','restituzione') NOT NULL,
+  `tempo` time NOT NULL,
+  `ID_bicicletta` int(11) NOT NULL,
+  `ID_utente` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `stazione`
 --
 
 CREATE TABLE `stazione` (
   `ID` int(11) NOT NULL,
-  `posizione` varchar(255) NOT NULL
+  `posizione` varchar(255) NOT NULL,
+  `MaxSlot` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -57,8 +86,8 @@ CREATE TABLE `utente` (
   `codice_fiscale` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
   `credito` int(11) NOT NULL,
-  `ID_bicicletta` int(11) DEFAULT NULL,
-  `mail` varchar(255) NOT NULL
+  `mail` varchar(255) NOT NULL,
+  `ID_indirizzo` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -74,6 +103,20 @@ ALTER TABLE `bicicletta`
   ADD KEY `ID_stazione` (`ID_stazione`);
 
 --
+-- Indexes for table `indirizzo`
+--
+ALTER TABLE `indirizzo`
+  ADD PRIMARY KEY (`ID`);
+
+--
+-- Indexes for table `operazione`
+--
+ALTER TABLE `operazione`
+  ADD PRIMARY KEY (`ID`),
+  ADD KEY `ID_bicicletta` (`ID_bicicletta`),
+  ADD KEY `ID_utente` (`ID_utente`);
+
+--
 -- Indexes for table `stazione`
 --
 ALTER TABLE `stazione`
@@ -86,7 +129,7 @@ ALTER TABLE `stazione`
 ALTER TABLE `utente`
   ADD PRIMARY KEY (`ID`),
   ADD UNIQUE KEY `codice_fiscale` (`codice_fiscale`),
-  ADD KEY `ID_bicicletta` (`ID_bicicletta`);
+  ADD KEY `ID_indirizzo` (`ID_indirizzo`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -96,6 +139,18 @@ ALTER TABLE `utente`
 -- AUTO_INCREMENT for table `bicicletta`
 --
 ALTER TABLE `bicicletta`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `indirizzo`
+--
+ALTER TABLE `indirizzo`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `operazione`
+--
+ALTER TABLE `operazione`
   MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
 
 --
@@ -121,10 +176,17 @@ ALTER TABLE `bicicletta`
   ADD CONSTRAINT `bicicletta_ibfk_1` FOREIGN KEY (`ID_stazione`) REFERENCES `stazione` (`ID`);
 
 --
+-- Constraints for table `operazione`
+--
+ALTER TABLE `operazione`
+  ADD CONSTRAINT `operazione_ibfk_1` FOREIGN KEY (`ID_utente`) REFERENCES `utente` (`ID`),
+  ADD CONSTRAINT `operazione_ibfk_2` FOREIGN KEY (`ID_bicicletta`) REFERENCES `bicicletta` (`ID`);
+
+--
 -- Constraints for table `utente`
 --
 ALTER TABLE `utente`
-  ADD CONSTRAINT `utente_ibfk_1` FOREIGN KEY (`ID_bicicletta`) REFERENCES `bicicletta` (`ID`);
+  ADD CONSTRAINT `utente_ibfk_1` FOREIGN KEY (`ID_indirizzo`) REFERENCES `indirizzo` (`ID`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
