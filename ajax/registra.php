@@ -21,8 +21,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $mail = $_POST["mail"];
     $password = md5($_POST["password"]); // Encrypt password using MD5
     $cod = $_POST["cod_f"];
+    $id = $_POST["id"];
     // Esegui la query per inserire i dati nel database
-    $sql = "INSERT INTO utente (mail, password,codice_fiscale) VALUES ('$mail', '$password','$cod')";
+    $sql = "INSERT INTO utente (mail, password,codice_fiscale,credito,ID_indirizzo) VALUES ('$mail', '$password', '$cod', 0, $id)";
 
     if ($conn->query($sql) === TRUE) {
         $response['status'] = 'success';    
