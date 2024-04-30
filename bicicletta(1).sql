@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Apr 27, 2024 at 09:05 AM
+-- Generation Time: Apr 30, 2024 at 10:30 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -60,7 +60,8 @@ CREATE TABLE `operazione` (
   `tipo` enum('prelievo','restituzione') NOT NULL,
   `tempo` time NOT NULL,
   `ID_bicicletta` int(11) NOT NULL,
-  `ID_utente` int(11) NOT NULL
+  `ID_utente` int(11) NOT NULL,
+  `ID_stazione` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -72,7 +73,8 @@ CREATE TABLE `operazione` (
 CREATE TABLE `stazione` (
   `ID` int(11) NOT NULL,
   `posizione` varchar(255) NOT NULL,
-  `MaxSlot` int(11) NOT NULL
+  `MaxSlot` int(11) NOT NULL,
+  `ID_indirizzo` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -114,14 +116,16 @@ ALTER TABLE `indirizzo`
 ALTER TABLE `operazione`
   ADD PRIMARY KEY (`ID`),
   ADD KEY `ID_bicicletta` (`ID_bicicletta`),
-  ADD KEY `ID_utente` (`ID_utente`);
+  ADD KEY `ID_utente` (`ID_utente`),
+  ADD KEY `ID_stazione` (`ID_stazione`);
 
 --
 -- Indexes for table `stazione`
 --
 ALTER TABLE `stazione`
   ADD PRIMARY KEY (`ID`),
-  ADD UNIQUE KEY `posizione` (`posizione`);
+  ADD UNIQUE KEY `posizione` (`posizione`),
+  ADD KEY `ID_indirizzo` (`ID_indirizzo`);
 
 --
 -- Indexes for table `utente`
@@ -180,7 +184,14 @@ ALTER TABLE `bicicletta`
 --
 ALTER TABLE `operazione`
   ADD CONSTRAINT `operazione_ibfk_1` FOREIGN KEY (`ID_utente`) REFERENCES `utente` (`ID`),
-  ADD CONSTRAINT `operazione_ibfk_2` FOREIGN KEY (`ID_bicicletta`) REFERENCES `bicicletta` (`ID`);
+  ADD CONSTRAINT `operazione_ibfk_2` FOREIGN KEY (`ID_bicicletta`) REFERENCES `bicicletta` (`ID`),
+  ADD CONSTRAINT `operazione_ibfk_3` FOREIGN KEY (`ID_stazione`) REFERENCES `stazione` (`ID`);
+
+--
+-- Constraints for table `stazione`
+--
+ALTER TABLE `stazione`
+  ADD CONSTRAINT `stazione_ibfk_1` FOREIGN KEY (`ID_indirizzo`) REFERENCES `indirizzo` (`ID`);
 
 --
 -- Constraints for table `utente`
