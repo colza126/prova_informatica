@@ -38,22 +38,21 @@ function getIndirizzo(id_ad){
 }
 
 async function caricaHome(){
-    var con = $("#stazioni-container").val();
+    var con = $("#stazioni-container");
 
     //da sistemare
     $.ajax({
         url: "../ajax/getStazioni.php",
         type: "POST",
-        success: function (data) {
+        success: async function (data) {
             if (data.status == "success") {
-                i = 1;
-                data.array.forEach(element => {
-                    var divDaje = "<div><h1>Stazione numero: " + i  + "</h1><br>";
-                    i++;
-                    divDaje += getIndirizzo(data.ID_indirizzo)
+                for (let index = 0; index < data.numero; index++) {
+                    
+                    var divDaje = "<div><h1>Stazione numero: " + index+1  + "</h1><br>";
+                    divDaje += await getIndirizzo(data[index].Id_indirizzo)
                     
                     con.append(divDaje);
-                });
+                }
             }
 
         }

@@ -29,9 +29,6 @@ if ($stmt === false) {
     die("Preparation failed: " . $conn->error);
 }
 
-// associa i parametri alla query
-$stmt->bind_param("s", $Id);
-
 // esegue la query
 $stmt->execute();
 
@@ -40,22 +37,21 @@ $result = $stmt->get_result();
 
 // array per la risposta JSON
 $response = array();
-
+$numero = 0;
 // verifica se ci sono righe nel risultato
 if ($result->num_rows > 0) {
-    $row = $result->fetch_assoc();
     while($row = $result->fetch_assoc()) {
-        $response[]['Id_indrizzo'] = $row['Id_indrizzo'];
+        $response[] = array('Id_indirizzo' => $row['ID_indirizzo']);
+        $numero++;
     }
     $response['status'] = 'success';
 } else {
     $response['status'] = 'fail';
 }
-
+$response["numero"] = $numero;
 // chiudi lo statement e la connessione al database
 $stmt->close();
 $conn->close();
 
 // stampa la risposta JSON
 echo json_encode($response);
-    
