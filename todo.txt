@@ -1,0 +1,13 @@
+Lista delle cose da fare:
+
+    implementare permessi admin
+        aggiungere utente
+        guardare gli stati delle biciclettere
+        vedere i log
+        vedere le statistiche
+        eliminare utenti
+        eliminare/inserisire bici
+    
+    Implementare il noleggio delle bici
+    
+    Migliorare la grafica
