@@ -1,26 +1,3 @@
-// function caricaHome() {
-
-//     var carta = $("#home-con").val();
-
-//     $.ajax({
-//         url: "../ajax/getBiciclette.php",
-//         type: "POST",
-//         success: function (data) {
-//             if (data.status == "success") {
-//                 array.forEach(element => {
-//                     array.forEach(element => {
-//                         var divDaje = "<div><h1>Bicicletta: " + element.codice + "</h1><br><p>Si trodatava a: " + element.posizione + "</p><br><p>Al momento e': " + element.stato + "</p><br></button></div>";
-//                         carta.append(divDaje);
-//                     });
-//                     var divDaje = "<div><h1>Bicicletta: " + element.codice + "</h1><br><p>Si trodatava a: " + element.posizione + "</p><br><p>Al momento e': " + element.stato + "</p><br></button></div>";
-//                     carta.append(divDaje);
-//                 });
-//             }
-
-//         }
-//     });
-// }
-    
 
 function getIndirizzo(id_ad){
     return new Promise((resolve) => {
@@ -30,12 +7,14 @@ function getIndirizzo(id_ad){
             data: {Id: id_ad},
             success: function (data) {
                 
-                resolve("<br>Presente in: "+data.via+" "+data.citta+" "+data.cap+" "+data.provincia+"</div>");
+                resolve("<br>Presente in: "+data.via+" "+data.citta+" "+data.cap+" "+data.provincia);
             }
         });
     
     })
 }
+
+
 
 async function caricaHome(){
     var con = $("#stazioni-container");
@@ -50,7 +29,7 @@ async function caricaHome(){
                     
                     var divDaje = "<div><h1>Stazione numero: " + index+1  + "</h1><br>";
                     divDaje += await getIndirizzo(data[index].Id_indirizzo)
-                    
+                    divDaje += "<button class='visualizzaBici' value='" + data[index].ID + "'>Visualizza</button></div>";
                     con.append(divDaje);
                 }
             }
@@ -63,5 +42,9 @@ async function caricaHome(){
 
 $(document).ready(function () {
     caricaHome();
-
+    
+    // Event delegation per gestire il click sui pulsanti visualizzaBici
+    $("#stazioni-container").on("click", ".visualizzaBici", function() {
+        window.location.href = "visualizzaBici.html?id_sta=" + $(this).val();
+    });
 });

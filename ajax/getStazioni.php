@@ -41,7 +41,7 @@ $numero = 0;
 // verifica se ci sono righe nel risultato
 if ($result->num_rows > 0) {
     while($row = $result->fetch_assoc()) {
-        $response[] = array('Id_indirizzo' => $row['ID_indirizzo']);
+        $response[] = array('Id_indirizzo' => $row['ID_indirizzo'],'ID' => $row['ID']);
         $numero++;
     }
     $response['status'] = 'success';

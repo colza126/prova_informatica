@@ -20,15 +20,19 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
+$id = $_POST['id_sta'];
+
 // query per selezionare tutte le biciclette
-$sql = "SELECT * FROM biciclette";
+$sql = "SELECT * FROM bicicletta WHERE ID_stazione = ?";
+$stmt = $conn->prepare($sql);
+
+
+// associa i parametri alla query
+$stmt->bind_param("i", $id);
 
 if ($stmt === false) {
     die("Preparation failed: " . $conn->error);
 }
-
-// associa i parametri alla query
-$stmt->bind_param("ss", $mail, $password);
 
 // esegue la query
 $stmt->execute();
@@ -38,6 +42,7 @@ $result = $stmt->get_result();
 
 // array per la risposta JSON
 $response = array();
+$numero = 0;
 
 
 // verifica se ci sono righe nel risultato
@@ -48,14 +53,20 @@ if ($result->num_rows > 0) {
 
     $response['status'] = 'success';
     // loop attraverso le righe del risultato
-    while ($row = $result->fetch_assoc()) {
-        // aggiungi la bicicletta all'array
-        $biciclette[] = $row;
-        $response[]['posizione'] = $biciclette["posizione"];
-        $response[]['codice'] = $biciclette["codice"];
-        $response[]['stato'] = $biciclette["stato"];
+    while($row = $result->fetch_assoc()) {
+        $response[] = array('codice' => $row['codice'],'stato' => $row['stato'],'ID' => $row['ID']);
+        $numero++;
+
     }
     
 } else {
     $response['status'] = 'fail';
 }
+$response["numero"] = $numero;
+
+
+$stmt->close();
+$conn->close();
+
+// stampa la risposta JSON
+echo json_encode($response);
