@@ -23,7 +23,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $cod = $_POST["cod_f"];
     $id = $_POST["id"];
     // Esegui la query per inserire i dati nel database
-    $sql = "INSERT INTO utente (mail, password,codice_fiscale,credito,ID_indirizzo) VALUES ('$mail', '$password', '$cod', 0, $id)";
+    $sql = "INSERT INTO utente (mail, password,credito,ID_indirizzo,admin) VALUES ('$mail', '$password', '$cod', $id, 0)";
 
     if ($conn->query($sql) === TRUE) {
         $response['status'] = 'success';    
