@@ -1,3 +1,22 @@
+var admin = false;
+function controllaSess(){
+    return new Promise((resolve) => {
+        $.ajax({
+            url: "../ajax/controllaSessione.php",
+            type: "POST",
+            success: function (data) {
+                if (data.auth) {
+                    admin = data.admin;
+                    resolve(true);
+                }else{
+                    window.location.href = "../index.html";
+                }
+            }
+        });
+    });
+
+}
+
 
 function getIndirizzo(id_ad){
     return new Promise((resolve) => {
@@ -17,6 +36,7 @@ function getIndirizzo(id_ad){
 
 
 async function caricaHome(){
+    
     var con = $("#stazioni-container");
 
     //da sistemare
@@ -41,6 +61,7 @@ async function caricaHome(){
 
 
 $(document).ready(function () {
+    controllaSess();
     caricaHome();
     
     // Event delegation per gestire il click sui pulsanti visualizzaBici

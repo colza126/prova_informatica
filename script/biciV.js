@@ -1,3 +1,23 @@
+var admin = false;
+function controllaSess(){
+    return new Promise((resolve) => {
+        $.ajax({
+            url: "../ajax/controllaSessione.php",
+            type: "POST",
+            success: function (data) {
+                if (data.auth) {
+                    admin = data.admin;
+                    resolve(true);
+                }else{
+                    window.location.href = "../index.html";
+                }
+            }
+        });
+    });
+
+}
+
+
 function getQueryParamValue(name) {
     // Ottieni la stringa di query dalla URL
     var queryString = window.location.search.substring(1);
@@ -46,7 +66,7 @@ function caricaHome(id) {
 
 
 $(document).ready(function () {
-    
+    controllaSess();
     caricaHome(getQueryParamValue("id_sta"));
 
 });

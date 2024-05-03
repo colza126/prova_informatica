@@ -49,9 +49,17 @@ $response = array();
 if ($result->num_rows > 0) {
     
     $response['status'] = 'success';
+
+    if($row["admin"] == 1){
+        $_SESSION['admin'] = true;
+    } else {
+        $_SESSION['admin'] = false;
+    }
+
     $_SESSION['auth'] = true;
 } else {
     $response['status'] = 'fail';
+    $_SESSION['auth'] = true;
 }
 
 // chiudi lo statement e la connessione al database
