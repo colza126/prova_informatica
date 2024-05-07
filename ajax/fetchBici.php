@@ -24,12 +24,9 @@ if ($conn->connect_error) {
 
 
 // query per selezionare tutte le biciclette
-$sql = "SELECT * FROM bicicletta";
+$sql = "SELECT * FROM bicicletta JOIN stazione ON bicicletta.ID_stazione = stazione.ID JOIN indirizzo ON stazione.ID_indirizzo = indirizzo.ID";
 $stmt = $conn->prepare($sql);
 
-
-// associa i parametri alla query
-$stmt->bind_param("i", $id);
 
 if ($stmt === false) {
     die("Preparation failed: " . $conn->error);
@@ -55,7 +52,7 @@ if ($result->num_rows > 0) {
     $response['status'] = 'success';
     // loop attraverso le righe del risultato
     while($row = $result->fetch_assoc()) {
-        $response[] = array('codice' => $row['codice'],'stato' => $row['stato'],'ID' => $row['ID'],'ID_stazione' => $row['ID_stazione']);
+        $response[] = array('codice' => $row['codice'],'stato' => $row['stato'],'ID' => $row['ID'],'citta' => $row['citta']);
         $numero++;
 
     }
