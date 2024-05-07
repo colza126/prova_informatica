@@ -55,7 +55,7 @@ function caricaHome(id) {
             if (data.status == "success") {
                 for (let index = 0; index < data.numero; index++) {
                     
-                    divDaje = "<div><h1>Bicicletta: " + data[index].codice + "</h1><p>Al momento e': " + data[index].stato + "</p></button></div>"
+                    divDaje = "<div><h1>Bicicletta: " + data[index].codice + "</h1><p>Al momento e': " + data[index].stato + "</p><button class = 'noleggia'>noleggia</button></div>"
                     carta.append(divDaje);
                 }
             }

@@ -61,9 +61,17 @@ async function caricaHome(){
 
 
 $(document).ready(function () {
+    $("#gestore_bici").hide();
     controllaSess();
     caricaHome();
     
+    if(admin){
+        $("#gestore_bici").show();
+    }
+    $("#gestore_bici").on("click", function(){
+        window.location.href = "gestoreBici.html";
+    });
+
     // Event delegation per gestire il click sui pulsanti visualizzaBici
     $("#stazioni-container").on("click", ".visualizzaBici", function() {
         window.location.href = "visualizzaBici.html?id_sta=" + $(this).val();
