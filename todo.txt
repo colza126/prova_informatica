@@ -1,13 +1,13 @@
 Lista delle cose da fare:
 
     implementare permessi admin
-        aggiungere utente
-        guardare gli stati delle biciclettere
+
+        guardare gli stati delle biciclettere //da debuggare
         vedere i log
         vedere le statistiche
-        eliminare utenti
-        eliminare/inserisire bici
+        eliminare utenti 
+        eliminare/inserisire bici //da debuggare
     
-    Implementare il noleggio delle bici
+    Implementare il noleggio delle bici //da debuggare??
     
     Migliorare la grafica
