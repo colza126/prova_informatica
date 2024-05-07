@@ -38,24 +38,24 @@ function getIndirizzo(id_ad){
 async function caricaHome(){
     
     var con = $("#stazioni-container");
-
-    //da sistemare
+    
     $.ajax({
         url: "../ajax/getStazioni.php",
         type: "POST",
         success: async function (data) {
             if (data.status == "success") {
                 for (let index = 0; index < data.numero; index++) {
-                    
-                    var divDaje = "<div><h1>Stazione numero: " + index+1  + "</h1><br>";
+                    // Aggiungi 1 all'indice prima di concatenarlo alla stringa
+                    var stationIndex = index + 1;
+                    var divDaje = "<div><h1>Stazione numero: " + stationIndex + "</h1><br>";
                     divDaje += await getIndirizzo(data[index].Id_indirizzo)
                     divDaje += "<button class='visualizzaBici' value='" + data[index].ID + "'>Visualizza</button></div>";
                     con.append(divDaje);
                 }
             }
-
         }
     });
+    
 
 }
 

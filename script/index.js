@@ -3,11 +3,11 @@ function login() {
         type: "POST",
         url: "ajax/login.php",
         data: {
-            mail: $("#email").val(),
-            password: $("#password").val()
+            mail: $("#mail-login").val(),
+            password: $("#password-login").val()
         },
         success: function(data) {
-            if (data == "success") {
+            if (data.status == "success") {
                 window.location.href = "pages/home.html";
             } else {
                 alert(data);

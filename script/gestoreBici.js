@@ -1,7 +1,7 @@
 function popolaSelect() {
     var select = $("#stazioni"); // Replace "selectId" with the actual ID of your select element
     $.ajax({
-        url: "../ajax/eliminaBici.php",
+        url: "../ajax/fetchBici.php",
         type: "POST",
         success: function (response) {
             // Assuming the response is an array of options
@@ -18,7 +18,7 @@ function popolaSelect() {
 function controllaSess() {
     return new Promise((resolve) => {
         $.ajax({
-            url: "../ajax/controllaSessione.php",
+            url: "../ajax/controlloSessione.php",
             type: "POST",
             success: function (data) {
                 if (data.auth) {

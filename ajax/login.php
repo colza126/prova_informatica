@@ -2,7 +2,7 @@
 // imposta l'intestazione per indicare che il contenuto è in formato JSON
 header('Content-Type: application/json');
 
-if(!isset($_SESSION)){
+if (!isset($_SESSION)) {
     session_start();
 }
 
@@ -47,15 +47,18 @@ $response = array();
 
 // verifica se ci sono righe nel risultato
 if ($result->num_rows > 0) {
-    
+
+
+
     $response['status'] = 'success';
+    while ($row = $result->fetch_assoc()) {
 
-    if($row["admin"] == 1){
-        $_SESSION['admin'] = true;
-    } else {
-        $_SESSION['admin'] = false;
+        if ($row["admin"] == 1) {
+            $_SESSION['admin'] = true;
+        } else {
+            $_SESSION['admin'] = false;
+        }
     }
-
     $_SESSION['auth'] = true;
 } else {
     $response['status'] = 'fail';
