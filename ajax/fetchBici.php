@@ -24,7 +24,7 @@ if ($conn->connect_error) {
 
 
 // query per selezionare tutte le biciclette
-$sql = "SELECT * FROM bicicletta JOIN stazione ON bicicletta.ID_stazione = stazione.ID JOIN indirizzo ON stazione.ID_indirizzo = indirizzo.ID";
+$sql = "SELECT bicicletta.*,citta,stato FROM bicicletta JOIN stazione ON bicicletta.ID_stazione = stazione.ID JOIN indirizzo ON stazione.ID_indirizzo = indirizzo.ID";
 $stmt = $conn->prepare($sql);
 
 

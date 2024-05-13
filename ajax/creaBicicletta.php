@@ -20,18 +20,18 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-$id = $_POST['id_bici'];
+$id = $_POST['id_stazione'];
 $codice = $_POST['codice'];
 
 // query per selezionare tutte le biciclette
-$sql = "INSERT INTO bicicletta ('Stato','codice','ID_stazione') VALUES ('Stazione',?,?)";
+$sql = "INSERT INTO `bicicletta` (`ID`, `stato`, `codice`, `ID_stazione`) VALUES (NULL, 'Stazione', ?, ?)";
 $stmt = $conn->prepare($sql);
-
-// associa i parametri alla query
-$stmt->bind_param("ii", $codice,$id);
 if ($stmt === false) {
     die("Preparation failed: " . $conn->error);
 }
+// associa i parametri alla query
+$stmt->bind_param("ii", $codice,$id);
+
 
 
 // esegue la query

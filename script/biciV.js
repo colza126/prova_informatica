@@ -4,6 +4,11 @@ $(document).ready(async function () {
     $("#red").click(function () {
         window.location.href = "gestoreBici.html";
     });
+    
+    $(".elimina").on("click", function () {
+        var id = $(this).parent().attr("id");
+        eliminaBici(id);
+    });
 });
 
 async function controllaSess() {
@@ -81,4 +86,20 @@ function getQueryParamValue(name) {
 
     // Se il parametro non è stato trovato, restituisci null
     return null;
+}
+
+function eliminaBici(id) {
+    $.ajax({
+        url: "../ajax/eliminaBici.php",
+        type: "POST",
+        data: { id_bici: id },
+        success: function (response) {
+            if (response.status == "success") {
+                alert("Bici eliminata");
+                location.reload();
+            } else {
+                alert("Errore");
+            }
+        }
+    });
 }

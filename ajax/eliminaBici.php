@@ -23,12 +23,13 @@ if ($conn->connect_error) {
 $id = $_POST['id_bici'];
 
 // query per selezionare tutte le biciclette
-$sql = "REMOVE FROM bicicletta WHERE ID = ?";
+$sql = "DELETE FROM bicicletta WHERE bicicletta.ID = ?";
 $stmt = $conn->prepare($sql);
 
 if ($stmt === false) {
     die("Preparation failed: " . $conn->error);
 }
+$stmt->bind_param("i", $id);
 
 
 // esegue la query

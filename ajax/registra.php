@@ -9,8 +9,10 @@ $username = "root";
 $password = "";
 $dbname = "bicicletta";
 
+// Crea la connessione al database
 $conn = new mysqli($servername, $username, $password, $dbname);
 
+// Verifica la connessione al database
 if ($conn->connect_error) {
     die("Connessione al database fallita: " . $conn->connect_error);
 }
@@ -22,16 +24,33 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $password = md5($_POST["password"]); // Encrypt password using MD5
     $cod = $_POST["cod_f"];
     $id = $_POST["id"];
-    // Esegui la query per inserire i dati nel database
-    $sql = "INSERT INTO utente (mail, password,credito,ID_indirizzo,admin) VALUES ('$mail', '$password', '$cod', $id, 0)";
-
-    if ($conn->query($sql) === TRUE) {
-        $response['status'] = 'success';    
+    
+    // Prepara la query SQL utilizzando una prepared statement
+    $sql = "INSERT INTO utente (mail, password, codice_fiscale, ID_indirizzo, admin) VALUES (?, ?, ?, ?, 0)";
+    $stmt = $conn->prepare($sql);
+    
+    // Verifica se la preparazione della query è avvenuta con successo
+    if ($stmt === false) {
+        die("Preparation failed: " . $conn->error);
+    }
+    
+    // Associa i parametri alla query
+    $stmt->bind_param("sssi", $mail, $password, $cod, $id);
+    
+    // Esegui la query
+    if ($stmt->execute()) {
+        $response['status'] = 'success';
     } else {
         $response['status'] = 'fail';
     }
+    
+    // Chiudi la dichiarazione preparata
+    $stmt->close();
 }
-// stampa la risposta JSON
+
+// Stampa la risposta JSON
 echo json_encode($response);
 
+// Chiudi la connessione al database
 $conn->close();
+?>
