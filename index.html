@@ -3,34 +3,93 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="script/jquery.js"></script>
     <title>Login</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <style>
+        body {
+            background-color: #f8f9fa;
+            padding-top: 50px;
+        }
+        .container {
+            max-width: 500px;
+            background-color: #fff;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .btn {
+            width: 100%;
+        }
+    </style>
 </head>
 <body>
-    <button id ="show-log">Login</button>
-    <button id ="show-reg">Registration</button>
-    <button id ="show-for">recupero password</button>
-    <div id ="login-con">
-        Mail: <input type="text" id = "mail-login" placeholder="inserisciMail"><br>
-        Password: <input type="password" id = "password-login"><br>
-        <button id = "btn-login">Login</button>
-    </div>
+    <div class="container">
+        <button id="show-log" class="btn btn-primary">Login</button>
+        <button id="show-reg" class="btn btn-secondary">Registration</button>
+        <button id="show-for" class="btn btn-info">Recupero password</button>
+        
+        <div id="login-con" style="display: none;">
+            <div class="form-group">
+                <label for="mail-login">Mail:</label>
+                <input type="text" class="form-control" id="mail-login" placeholder="Inserisci mail">
+            </div>
+            <div class="form-group">
+                <label for="password-login">Password:</label>
+                <input type="password" class="form-control" id="password-login">
+            </div>
+            <button id="btn-login" class="btn btn-success">Login</button>
+        </div>
 
-    <div id ="register-con">
-        Mail: <input type="text" id = "mail-reg"><br>
-        Codice fiscale: <input type="text" id = "codfiscale"><br>
-        Password <input type="password" id = "password-reg"><br>
-        Via: <input type="text" id = "via"><br>
-        Citta: <input type="text" id = "citta"><br>
-        Cap: <input type="text" id = "cap"><br>
-        Provincia: <input type="text" id = "provincia"><br>
-        <button id = "btn-reg">registrati</button>
-    </div>
+        <div id="register-con" style="display: none;">
+            <div class="form-group">
+                <label for="mail-reg">Mail:</label>
+                <input type="text" class="form-control" id="mail-reg">
+            </div>
+            <div class="form-group">
+                <label for="codfiscale">Codice fiscale:</label>
+                <input type="text" class="form-control" id="codfiscale">
+            </div>
+            <div class="form-group">
+                <label for="password-reg">Password:</label>
+                <input type="password" class="form-control" id="password-reg">
+            </div>
+            <div class="form-group">
+                <label for="via">Via:</label>
+                <input type="text" class="form-control" id="via">
+            </div>
+            <div class="form-group">
+                <label for="citta">Città:</label>
+                <input type="text" class="form-control" id="citta">
+            </div>
+            <div class="form-group">
+                <label for="cap">CAP:</label>
+                <input type="text" class="form-control" id="cap">
+            </div>
+            <div class="form-group">
+                <label for="provincia">Provincia:</label>
+                <input type="text" class="form-control" id="provincia">
+            </div>
+            <button id="btn-reg" class="btn btn-primary">Registrati</button>
+        </div>
 
-    <div id ="forgot-con">
-        Mail: <input type="text" id = "mail-for"><br>
-        <button id = "btn-for">invia!</button>
+        <div id="forgot-con" style="display: none;">
+            <div class="form-group">
+                <label for="mail-for">Mail:</label>
+                <input type="text" class="form-control" id="mail-for">
+            </div>
+            <button id="btn-for" class="btn btn-warning">Invia!</button>
+        </div>
     </div>
+    <!-- jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <!-- Custom JS -->
     <script src="script/index.js"></script>
 </body>
 </html>
