@@ -55,6 +55,19 @@ if(isset($_POST['id_bici'], $_POST['id_utente'], $_POST['codice'])) {
     // Esegui la query
     $stmt->execute();
 
+    // Query per aggiornare lo stato della bicicletta
+    $sql = "UPDATE utente SET bici_carico = 1 WHERE ID = ?";
+    $stmt = $conn->prepare($sql);
+
+    // Associa i parametri alla query
+    $stmt->bind_param("i", $id_u);
+    if ($stmt === false) {
+        die("Preparation failed: " . $conn->error);
+    }
+
+    // Esegui la query
+    $stmt->execute();
+
     // Chiudi la connessione al database
     $conn->close();
 

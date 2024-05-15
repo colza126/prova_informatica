@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Creato il: Mag 02, 2024 alle 16:00
+-- Creato il: Mag 15, 2024 alle 19:12
 -- Versione del server: 10.4.28-MariaDB
 -- Versione PHP: 8.0.28
 
@@ -39,7 +39,8 @@ CREATE TABLE `bicicletta` (
 --
 
 INSERT INTO `bicicletta` (`ID`, `stato`, `codice`, `ID_stazione`) VALUES
-(1, 'Noleggiata', 11111, 1);
+(5, 'Stazione', 4123412, 2),
+(7, 'Noleggiata', 6969696, 1);
 
 -- --------------------------------------------------------
 
@@ -60,7 +61,9 @@ CREATE TABLE `indirizzo` (
 --
 
 INSERT INTO `indirizzo` (`ID`, `via`, `citta`, `cap`, `provincia`) VALUES
-(1, 'via pio X', 'Mariano Comense', 22066, 'Como');
+(1, 'via pio X', 'Mariano Comense', 22066, 'Como'),
+(4, 'stocazzo', 'stocazzo', 69696, 'stocazzo'),
+(5, 'stocazzo', 'stocazzo', 69696, 'stocazzo');
 
 -- --------------------------------------------------------
 
@@ -71,10 +74,18 @@ INSERT INTO `indirizzo` (`ID`, `via`, `citta`, `cap`, `provincia`) VALUES
 CREATE TABLE `operazione` (
   `ID` int(11) NOT NULL,
   `tipo` enum('prelievo','restituzione') NOT NULL,
-  `tempo` time NOT NULL,
+  `inizio` datetime DEFAULT NULL,
   `ID_bicicletta` int(11) NOT NULL,
-  `ID_utente` int(11) NOT NULL
+  `ID_utente` int(11) NOT NULL,
+  `fine` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dump dei dati per la tabella `operazione`
+--
+
+INSERT INTO `operazione` (`ID`, `tipo`, `inizio`, `ID_bicicletta`, `ID_utente`, `fine`) VALUES
+(1, 'prelievo', '2024-05-15 18:56:31', 7, 1, NULL);
 
 -- --------------------------------------------------------
 
@@ -93,7 +104,8 @@ CREATE TABLE `stazione` (
 --
 
 INSERT INTO `stazione` (`ID`, `MaxSlot`, `ID_indirizzo`) VALUES
-(1, 100, 1);
+(1, 100, 1),
+(2, 200, 1);
 
 -- --------------------------------------------------------
 
@@ -107,8 +119,17 @@ CREATE TABLE `utente` (
   `password` varchar(255) NOT NULL,
   `mail` varchar(255) NOT NULL,
   `ID_indirizzo` int(11) NOT NULL,
-  `admin` tinyint(1) NOT NULL
+  `admin` tinyint(1) NOT NULL,
+  `bici_carico` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dump dei dati per la tabella `utente`
+--
+
+INSERT INTO `utente` (`ID`, `codice_fiscale`, `password`, `mail`, `ID_indirizzo`, `admin`, `bici_carico`) VALUES
+(1, 'CLZNMLFNN149235WJNN', '5f4dcc3b5aa765d61d8327deb882cf99', 'lollocolz04@gmail.com', 1, 1, 0),
+(2, 'stocazzo', '5f4dcc3b5aa765d61d8327deb882cf99', 'stocazzo', 5, 0, 0);
 
 --
 -- Indici per le tabelle scaricate
@@ -159,31 +180,31 @@ ALTER TABLE `utente`
 -- AUTO_INCREMENT per la tabella `bicicletta`
 --
 ALTER TABLE `bicicletta`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT per la tabella `indirizzo`
 --
 ALTER TABLE `indirizzo`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT per la tabella `operazione`
 --
 ALTER TABLE `operazione`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT per la tabella `stazione`
 --
 ALTER TABLE `stazione`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT per la tabella `utente`
 --
 ALTER TABLE `utente`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Limiti per le tabelle scaricate

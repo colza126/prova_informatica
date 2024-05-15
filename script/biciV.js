@@ -5,7 +5,7 @@ async function controllaSess() {
         $.ajax({
             url: "../ajax/controlloSessione.php",
             type: "POST",
-            success: function (data) {
+            success: async function (data) {
                 if (data.auth) {
                     admin = data.admin;
 
@@ -15,7 +15,11 @@ async function controllaSess() {
                         $("#red").hide();
                     }
                     // Dopo aver impostato admin, chiamiamo caricaHome
-                    caricaHome(getQueryParamValue("id_sta"), admin);
+                    if(await controlloNoleggio() == false){
+                        caricaHome(getQueryParamValue("id_sta"), admin);
+                    }else{
+                        //da aggiungere funzione che visualizza la bici noleggiata
+                    }
                     resolve(true);
                 } else {
                     window.location.href = "../index.html";
@@ -24,6 +28,36 @@ async function controllaSess() {
         });
     });
 
+}
+
+function visualizzaBiciletta(){
+    var carta = $("#home-con");
+
+    $.ajax({
+        url: "../ajax/getBiciclette.php",
+        type: "POST",
+        data: { id_sta: id },
+        success: function (data) {
+            if (data.status == "success") {
+                for (let index = 0; index < data.numero; index++) {
+                    var divDaje = "<div id='" + data[index].ID + "'>";
+                    divDaje += "<h1>Bicicletta: " + data[index].codice + "</h1>";
+                    divDaje += "<p>Al momento e': " + data[index].stato + "</p>";
+
+                    if (data[index].stato != "Noleggiata") {
+                        divDaje += "<button class='noleggia btn btn-success'>Noleggia</button>";
+                    }
+                    if (admin) {
+                        divDaje += "<button class='elimina btn btn-danger'>Elimina</button>";
+                    }
+
+                    divDaje += "</div>";
+                    carta.append(divDaje);
+                }
+            }
+
+        }
+    });
 }
 
 function caricaHome(id, admin) {
@@ -55,7 +89,24 @@ function caricaHome(id, admin) {
         }
     });
 }
-
+async function controlloNoleggio() {
+    var id_utente;
+    $.ajax({
+        url: "../ajax/getIdNellaSessione.php",
+        type: "GET",
+        success: function (response) {
+            id_utente = response.id;
+            $.ajax({
+                url: "../ajax/checkNoleggiata.php",
+                type: "POST",
+                data: { id_utente: id_utente },
+                success: function (response) {
+                        return response.is_rented;
+                }
+            });
+        }
+    });
+}
 
 function getQueryParamValue(name) {
     // Ottieni la stringa di query dalla URL
@@ -135,6 +186,6 @@ $(document).ready(async function () {
     $("body").on("click", ".noleggia", function () {
         var id = $(this).parent().attr("id");
         var codice = $(this).parent().find("h1").text().split(" ")[1];
-        noleggia(id , codice);
+        noleggia(id, codice);
     });
 });
