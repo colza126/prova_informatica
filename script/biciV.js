@@ -1,15 +1,4 @@
-$(document).ready(async function () {
-    await controllaSess();
 
-    $("#red").click(function () {
-        window.location.href = "gestoreBici.html";
-    });
-    
-    $(".elimina").on("click", function () {
-        var id = $(this).parent().attr("id");
-        eliminaBici(id);
-    });
-});
 
 async function controllaSess() {
     return new Promise((resolve) => {
@@ -26,7 +15,7 @@ async function controllaSess() {
                         $("#red").hide();
                     }
                     // Dopo aver impostato admin, chiamiamo caricaHome
-                    caricaHome(getQueryParamValue("id_sta"),admin);
+                    caricaHome(getQueryParamValue("id_sta"), admin);
                     resolve(true);
                 } else {
                     window.location.href = "../index.html";
@@ -37,7 +26,7 @@ async function controllaSess() {
 
 }
 
-function caricaHome(id,admin) {
+function caricaHome(id, admin) {
     var carta = $("#home-con");
 
     $.ajax({
@@ -47,15 +36,17 @@ function caricaHome(id,admin) {
         success: function (data) {
             if (data.status == "success") {
                 for (let index = 0; index < data.numero; index++) {
-                    divDaje = "<div id = "+data[index].ID+"><h1>Bicicletta: " + data[index].codice + "</h1><p>Al momento e': " + data[index].stato + "</p>"
+                    var divDaje = "<div id='" + data[index].ID + "'>";
+                    divDaje += "<h1>Bicicletta: " + data[index].codice + "</h1>";
+                    divDaje += "<p>Al momento e': " + data[index].stato + "</p>";
 
                     if (data[index].stato != "Noleggiata") {
-                        divDaje += "<button class = 'noleggia'>noleggia</button>";
+                        divDaje += "<button class='noleggia btn btn-success'>Noleggia</button>";
                     }
-                    if(admin){
-                        divDaje += "<button class = 'elimina'>elimina</button>";
+                    if (admin) {
+                        divDaje += "<button class='elimina btn btn-danger'>Elimina</button>";
                     }
-                    
+
                     divDaje += "</div>";
                     carta.append(divDaje);
                 }
@@ -64,6 +55,7 @@ function caricaHome(id,admin) {
         }
     });
 }
+
 
 function getQueryParamValue(name) {
     // Ottieni la stringa di query dalla URL
@@ -103,3 +95,46 @@ function eliminaBici(id) {
         }
     });
 }
+
+function noleggia(id_bici, codice) {
+
+    var id_utente;
+    $.ajax({
+        url: "../ajax/getIdNellaSessione.php",
+        type: "GET",
+        success: function (response) {
+            id_utente = response.id;
+
+            $.ajax({
+                url: "../ajax/noleggiaBici.php",
+                type: "POST",
+                data: { id_bici: id_bici, id_utente: id_utente, codice: codice },
+                success: async function (response) {
+                    await controllaSess();
+
+                }
+            });
+        }
+    });
+
+}
+
+$(document).ready(async function () {
+    await controllaSess();
+
+    $("#red").click(function () {
+        window.location.href = "gestoreBici.html";
+    });
+
+    // Delega gli eventi click per le classi ".elimina" e ".noleggia" agli elementi "body"
+    $("body").on("click", ".elimina", function () {
+        var id = $(this).parent().attr("id");
+        eliminaBici(id);
+    });
+
+    $("body").on("click", ".noleggia", function () {
+        var id = $(this).parent().attr("id");
+        var codice = $(this).parent().find("h1").text().split(" ")[1];
+        noleggia(id , codice);
+    });
+});

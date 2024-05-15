@@ -47,27 +47,22 @@ $response = array();
 
 // verifica se ci sono righe nel risultato
 if ($result->num_rows > 0) {
-
-
-
     $response['status'] = 'success';
     while ($row = $result->fetch_assoc()) {
-
         if ($row["admin"] == 1) {
             $_SESSION['admin'] = true;
         } else {
             $_SESSION['admin'] = false;
         }
+        $_SESSION['auth'] = true;
+        $_SESSION['id'] = $row["ID"]; // Save the ID in the session
     }
-    $_SESSION['auth'] = true;
 } else {
     $response['status'] = 'fail';
     $_SESSION['auth'] = true;
 }
+echo json_encode($response);
 
 // chiudi lo statement e la connessione al database
 $stmt->close();
 $conn->close();
-
-// stampa la risposta JSON
-echo json_encode($response);
