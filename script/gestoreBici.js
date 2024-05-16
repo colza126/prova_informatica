@@ -48,7 +48,11 @@ async function caricaBici() {
     
     for (let index = 0; index < response.numero; index++) {
         const element = response[index];
-        var singolo = "<div id=" + response[index].ID + ">Codice:" + response[index].codice + "<br>stato:" + response[index].stato + "<br>Citta:" + response[index].citta + "<button class='elimina'>elimina</button></div>";
+        var singolo = "<div id=" + response[index].ID + ">Codice:" + response[index].codice + "<br>stato:" + response[index].stato + "<br>Citta:" + response[index].citta;
+        if(response[index].stato != "Noleggiata"){
+            singolo += "<button class='elimina btn btn-danger'>Elimina</button>";
+        }
+        singolo += "</div>";
         container.append(singolo);
     }
 }

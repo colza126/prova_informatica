@@ -19,7 +19,7 @@ async function controllaSess() {
                         caricaHome(getQueryParamValue("id_sta"), admin);
                     }else{
                         //da aggiungere funzione che visualizza la bici noleggiata
-                        visualizzaBiciNoleggiata();
+                        visualizzaBiciNoleggiata(getQueryParamValue("id_sta"));
                     }
                     resolve(true);
                 } else {
@@ -60,11 +60,12 @@ function visualizzaBiciletta(){
         }
     });
 }
-function visualizzaBiciNoleggiata(){
+function visualizzaBiciNoleggiata(ID){
     var carta = $("#home-con");
     $.ajax({
-        url: "../ajax/bicicNoleggiateUser.php",
+        url: "../ajax/biciNoleggiateUser.php",
         type: "POST",
+        data: { ID: ID },
         success: function (data) {
             if (data.status == "success") {
                 for (let index = 0; index < data.numero; index++) {
@@ -74,9 +75,6 @@ function visualizzaBiciNoleggiata(){
 
                     if (data[index].stato != "Noleggiata") {
                         divDaje += "<button class='noleggia btn btn-success'>Noleggia</button>";
-                    }
-                    if (admin) {
-                        divDaje += "<button class='elimina btn btn-danger'>Elimina</button>";
                     }
 
                     divDaje += "</div>";

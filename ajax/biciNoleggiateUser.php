@@ -20,7 +20,7 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-$id = $_SESSION['ID'];
+$id = $_POST['ID'];
 
 
 // query per selezionare tutte le biciclette
