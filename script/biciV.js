@@ -31,6 +31,30 @@ async function controllaSess() {
 
 }
 
+function visualizzaStats(){
+    var div = $("#operazione-con");
+
+    $.ajax({
+        url: "../ajax/fetchOperazioniUser.php",
+        type: "POST",
+        success: function(data){
+            for (let index = 0; index < data.numero; index++) {
+                div += "<h1>Operazione: " + data[index].ID + "</h1>";
+                div += "<p>tipo: " + data[index].tipo + "</p>";
+                div += "<p>inizio: " + data[index].operazione + "</p>";
+                if(data[index].fine == null){
+                    div += "<p>Non ancora terminata</p>";
+                }else{
+                    div += "<p>Orario: " + data[index].fine + "</p>";
+
+                }
+                div += "</div>";
+                $("#home-con").append(divDaje);
+            }
+        }
+    });
+}
+
 function visualizzaBiciletta(){
     var carta = $("#home-con");
 
