@@ -1,3 +1,5 @@
+
+
 function popolaSelect() {
     var select = $("#stazioni"); // Replace "selectId" with the actual ID of your select element
     $.ajax({

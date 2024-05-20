@@ -11,3 +11,5 @@ Lista delle cose da fare:
     Implementare il noleggio delle bici //da debuggare??
     
     Migliorare la grafica
+
+    api key:664b4e3cd75ef811112818qwie61d60
