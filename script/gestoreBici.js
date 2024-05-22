@@ -96,6 +96,53 @@ function inserisciBici(){
     });
 
 }
+
+function inserisciStazioni(){
+
+    var nSlot = $("#n_slot").val();
+
+    $.ajax({
+        type: "POST",
+        url: "ajax/inserisci_indirizzo.php",
+        data: {
+            citta: $("#citta").val(),
+            via: $("#via").val(),
+            provincia: $("#provincia").val(),
+            cap: $("#cap").val()
+        },
+        success: function(response) {
+            if (typeof response === "string") {
+                try {
+                    response = JSON.parse(response); // Parsa la risposta JSON
+                } catch (error) {
+                    console.error("Errore di parsing JSON:", error);
+                    alert("Errore di parsing JSON");
+                    return;
+                }
+            }
+            if (response.status === "success") {
+                console.log("Successo! ID:", response.id);
+                $.ajax({
+                    url: "../ajax/inserisciStazione.php",
+                    method: "POST",
+                    data:{
+                        slot: nSlot
+                    },
+                    success:function name() {
+                        alert("stazione inserita con successo");
+                    }
+                })
+            } else {
+                console.error("Errore:", response.message); // Supponendo che ci sia un campo "message" nel caso di errore
+                alert("Errore: " + response.message);
+            }
+        },
+        error: function(xhr, status, error) {
+            console.error("Errore nella richiesta AJAX:", status, error);
+            alert("Errore nella richiesta AJAX");
+        }
+    });
+}
 $(document).ready(async function () {
     await controllaSess();
     popolaSelect();
