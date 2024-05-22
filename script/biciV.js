@@ -110,6 +110,23 @@ function visualizzaBiciNoleggiata(ID){
     });
 
 }
+
+function eliminaStazione(id) {
+    $.ajax({
+        url : "../ajax/eliminaStazione.php",
+        type : "POST",
+        data : {id_sta : id},
+        success : function(response){
+            if(response.status == "success"){
+                alert("Stazione eliminata");
+                window.location.href = "home.html";
+            }else{
+                alert("Errore");
+            }
+        }
+    });
+}
+
 function caricaHome(id, admin) {
     var carta = $("#home-con");
 
@@ -133,6 +150,10 @@ function caricaHome(id, admin) {
 
                     divDaje += "</div>";
                     carta.append(divDaje);
+                }
+                if(admin){
+                    divDaje += "<button class='elimina btn btn-danger'>Elimina</button>";
+                    
                 }
             }
 
@@ -237,5 +258,9 @@ $(document).ready(async function () {
         var id = $(this).parent().attr("id");
         var codice = $(this).parent().find("h1").text().split(" ")[1];
         noleggia(id, codice);
+    });
+
+    $("#elimina-stazione").click(function(){
+        eliminaStazione(getQueryParamValue("id_sta"));
     });
 });
