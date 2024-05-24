@@ -4,7 +4,7 @@
 header('Content-Type: application/json');
 function generateRandomNumber() {
     $randomNumber = mt_rand(1000000000, 9999999999);
-    echo json_encode(array("random_number" => $randomNumber));
+    return $randomNumber;
 }
 
 // Connessione al database
@@ -36,9 +36,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($stmt === false) {
         die("Preparation failed: " . $conn->error);
     }
-    
+    $tessera =  generateRandomNumber();
     // Associa i parametri alla query
-    $stmt->bind_param("ssii", $mail, $password,  generateRandomNumber(), $id);
+    $stmt->bind_param("ssii", $mail, $password, $tessera, $id);
     
     // Esegui la query
     if ($stmt->execute()) {

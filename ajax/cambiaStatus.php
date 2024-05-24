@@ -4,8 +4,9 @@
 // Funzione per generare un numero casuale da 10 cifre
 function generateRandomNumber() {
     $randomNumber = mt_rand(1000000000, 9999999999);
-    echo json_encode(array("random_number" => $randomNumber));
+    return $randomNumber;
 }
+
 
 
 header('Content-Type: application/json');

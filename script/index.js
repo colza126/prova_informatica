@@ -57,20 +57,18 @@ function registerUser(id) {
         url: "ajax/registra.php",
         data: {
             mail: $("#mail-reg").val(),
-            cod_f: $("#codfiscale").val(),
             password: $("#password-reg").val(),
             id: id,
         },
         success: function(data) {
-            if (data === "success") {
+            if (data.status === "success") {
                 alert("Registrazione avvenuta con successo");
             } else {
-                alert(data);
+                console.log(data);
             }
         },
         error: function(xhr, status, error) {
             console.error("Errore nella richiesta AJAX:", status, error);
-            alert("Errore nella richiesta AJAX");
         }
     });
 }
