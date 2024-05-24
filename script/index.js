@@ -75,8 +75,15 @@ function registerUser(id) {
     });
 }
 
+function session_destroy() {
+    $.ajax({
+        url : "ajax/eliminaSessione.php",
+        method: "POST"
+    })
+}
 
 $(document).ready(function() {
+    session_destroy();
     // Hide the divs initially
     $("#login-con").hide();
     $("#register-con").hide();

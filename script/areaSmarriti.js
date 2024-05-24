@@ -35,21 +35,24 @@ function visualizzaDisattivati() {
                     const element = data[index];
                     
                     var itemHtml = `
-                        <div class="stazione-item">
-                            <p>ID: ${element.ID}</p>
-                            <p>Numero tessera: ${element.numero_tessera}</p>
-                            <button class="sistema" data-id="${element.ID}">Riattiva carta</button>
+                        <div class="card stazione-item mb-3">
+                            <div class="card-body">
+                                <h5 class="card-title">ID: ${element.ID}</h5>
+                                <p class="card-text">Numero tessera: ${element.numero_tessera}</p>
+                                <button class="btn btn-primary riattiva-btn" data-id="${element.ID}">Riattiva carta</button>
+                            </div>
                         </div>
                     `;
                     usercon.append(itemHtml);
                 }
 
             } else {
-                alert('No disactivated cards found');
+                usercon.html('<div class="alert alert-warning" role="alert">Nessuna carta disattivata trovata</div>');
             }
         },
         error: function () {
-            console.error("Error occurred while fetching data");
+            console.error("Errore durante il recupero dei dati");
+            usercon.html('<div class="alert alert-danger" role="alert">Si è verificato un errore durante il recupero dei dati</div>');
         }
     });
 }
@@ -62,12 +65,24 @@ function riattivaCarta(id) {
             data: { ID: id, status: 1 },
             success: function (data) {
                 alert("Operazione effettuata con successo");
-                visualizzaDisattivati(); // Refresh the list after reactivating
+                visualizzaDisattivati(); // Aggiorna la lista dopo aver riattivato
             },
             error: function (xhr, status, error) {
+                console.error("Si è verificato un errore durante l'operazione", error);
             }
         });
     }
+}
+function createHomeButton() {
+    var homeButtonHtml = `
+        <button class="btn btn-secondary mt-3" id="home-button">Torna alla Home</button>
+    `;
+    $('#user-con').append(homeButtonHtml);
+
+    // Event listener for the home button
+    $('#home-button').on('click', function() {
+        window.location.href = "../index.html";
+    });
 }
 
 $(document).ready(async function () {
@@ -75,10 +90,13 @@ $(document).ready(async function () {
     if (isAuthorized) {
         visualizzaDisattivati();
 
-        // Event delegation to handle click events o    n dynamically created buttons
-        $('#user-con').on('click', '.sistema', function () {
+        // Event delegation to handle click events on dynamically created buttons
+        $('#user-con').on('click', '.riattiva-btn', function () {
             var id = $(this).data('id');
             riattivaCarta(id);
         });
+
+        // Call the function to create the home button
+        createHomeButton();
     }
 });

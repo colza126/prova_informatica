@@ -113,9 +113,11 @@ async function aggiungiMarker(indirizzo, divDaje) {
     });
 }
 
+
+
 $(document).ready(function () {
     $("#gestore_bici").hide();
-    $('area-smarrimenti-btn').hide();
+    $('#area-smarrimenti-btn').hide();
     controllaSess();
     caricaHome();
     map = L.map('map').setView([45, 10], 3);

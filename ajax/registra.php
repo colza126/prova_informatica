@@ -2,6 +2,10 @@
 // FILEPATH: /D:/xampp/htdocs/cinema/ajax/registration.php
 
 header('Content-Type: application/json');
+function generateRandomNumber() {
+    $randomNumber = mt_rand(1000000000, 9999999999);
+    echo json_encode(array("random_number" => $randomNumber));
+}
 
 // Connessione al database
 $servername = "localhost";
@@ -22,7 +26,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Recupera i dati dal form
     $mail = $_POST["mail"];
     $password = md5($_POST["password"]); // Encrypt password using MD5
-    $cod = $_POST["cod_f"];
     $id = $_POST["id"];
     
     // Prepara la query SQL utilizzando una prepared statement
@@ -35,7 +38,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
     
     // Associa i parametri alla query
-    $stmt->bind_param("sssi", $mail, $password, $cod, $id);
+    $stmt->bind_param("ssii", $mail, $password,  generateRandomNumber(), $id);
     
     // Esegui la query
     if ($stmt->execute()) {
