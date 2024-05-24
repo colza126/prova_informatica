@@ -241,8 +241,21 @@ function noleggia(id_bici, codice) {
 
 }
 
+function createHomeButton() {
+    var homeButtonHtml = `
+        <button class="btn btn-secondary mt-3" id="home-button">Torna alla Home</button>
+    `;
+    $('.container').append(homeButtonHtml);
+
+    // Event listener for the home button
+    $('#home-button').on('click', function() {
+        window.location.href = "home.html";
+    });
+}
+
 $(document).ready(async function () {
     await controllaSess();
+    createHomeButton();
 
     $("#red").click(function () {
         window.location.href = "gestoreBici.html";

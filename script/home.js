@@ -115,6 +115,7 @@ async function aggiungiMarker(indirizzo, divDaje) {
 
 
 
+
 $(document).ready(function () {
     $("#gestore_bici").hide();
     $('#area-smarrimenti-btn').hide();

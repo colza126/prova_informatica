@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Creato il: Mag 15, 2024 alle 19:12
--- Versione del server: 10.4.28-MariaDB
--- Versione PHP: 8.0.28
+-- Creato il: Mag 24, 2024 alle 09:41
+-- Versione del server: 10.4.32-MariaDB
+-- Versione PHP: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -63,7 +63,8 @@ CREATE TABLE `indirizzo` (
 INSERT INTO `indirizzo` (`ID`, `via`, `citta`, `cap`, `provincia`) VALUES
 (1, 'via pio X', 'Mariano Comense', 22066, 'Como'),
 (4, 'stocazzo', 'stocazzo', 69696, 'stocazzo'),
-(5, 'stocazzo', 'stocazzo', 69696, 'stocazzo');
+(5, 'stocazzo', 'stocazzo', 69696, 'stocazzo'),
+(11, 'Roma', 'Monza', 20900, 'Monza');
 
 -- --------------------------------------------------------
 
@@ -105,7 +106,7 @@ CREATE TABLE `stazione` (
 
 INSERT INTO `stazione` (`ID`, `MaxSlot`, `ID_indirizzo`) VALUES
 (1, 100, 1),
-(2, 200, 1);
+(2, 200, 11);
 
 -- --------------------------------------------------------
 
@@ -115,21 +116,23 @@ INSERT INTO `stazione` (`ID`, `MaxSlot`, `ID_indirizzo`) VALUES
 
 CREATE TABLE `utente` (
   `ID` int(11) NOT NULL,
-  `codice_fiscale` varchar(255) NOT NULL,
+  `numero_tessera` int(11) NOT NULL,
   `password` varchar(255) NOT NULL,
   `mail` varchar(255) NOT NULL,
   `ID_indirizzo` int(11) NOT NULL,
   `admin` tinyint(1) NOT NULL,
-  `bici_carico` tinyint(1) NOT NULL
+  `bici_carico` tinyint(1) NOT NULL,
+  `carta_attiva` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dump dei dati per la tabella `utente`
 --
 
-INSERT INTO `utente` (`ID`, `codice_fiscale`, `password`, `mail`, `ID_indirizzo`, `admin`, `bici_carico`) VALUES
-(1, 'CLZNMLFNN149235WJNN', '5f4dcc3b5aa765d61d8327deb882cf99', 'lollocolz04@gmail.com', 1, 1, 0),
-(2, 'stocazzo', '5f4dcc3b5aa765d61d8327deb882cf99', 'stocazzo', 5, 0, 0);
+INSERT INTO `utente` (`ID`, `numero_tessera`, `password`, `mail`, `ID_indirizzo`, `admin`, `bici_carico`, `carta_attiva`) VALUES
+(1, 2315125, '5f4dcc3b5aa765d61d8327deb882cf99', 'lollocolz04@gmail.com', 1, 1, 0, 1),
+(2, 124513, '5f4dcc3b5aa765d61d8327deb882cf99', 'stocazzo', 5, 0, 0, 1),
+(4, 2147483647, '5f4dcc3b5aa765d61d8327deb882cf99', 'colzani_lorenzo@proton.me', 11, 0, 0, 1);
 
 --
 -- Indici per le tabelle scaricate
@@ -169,7 +172,6 @@ ALTER TABLE `stazione`
 --
 ALTER TABLE `utente`
   ADD PRIMARY KEY (`ID`),
-  ADD UNIQUE KEY `codice_fiscale` (`codice_fiscale`),
   ADD KEY `ID_indirizzo` (`ID_indirizzo`);
 
 --
@@ -186,7 +188,7 @@ ALTER TABLE `bicicletta`
 -- AUTO_INCREMENT per la tabella `indirizzo`
 --
 ALTER TABLE `indirizzo`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT per la tabella `operazione`
@@ -204,7 +206,7 @@ ALTER TABLE `stazione`
 -- AUTO_INCREMENT per la tabella `utente`
 --
 ALTER TABLE `utente`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Limiti per le tabelle scaricate

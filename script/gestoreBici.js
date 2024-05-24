@@ -144,10 +144,23 @@ function inserisciStazioni(){
     });
 }
 
+function createHomeButton() {
+    var homeButtonHtml = `
+        <button class="btn btn-secondary mt-3" id="home-button">Torna alla Home</button>
+    `;
+    $('#form-container').append(homeButtonHtml);
+
+    // Event listener for the home button
+    $('#home-button').on('click', function() {
+        window.location.href = "home.html";
+    });
+}
+
 
 $(document).ready(async function () {
     await controllaSess();
     popolaSelect();
+    createHomeButton();
     await caricaBici();
 
     $(".elimina").on("click", function () {
