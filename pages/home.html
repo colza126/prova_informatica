@@ -32,21 +32,36 @@
             height: 600px;
             width: 100%;
         }
+        .top-right-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
+        .btn-group {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
+        .btn-group button {
+            margin-left: 10px;
+        }
     </style>
 </head>
 <body>
-    <div class="container">
+    <div class="container position-relative">
+        <div class="btn-group">
+            <button id="smarrimento-btn" class="btn btn-danger">Segnala Smarrimento</button>
+            <button id="area-smarrimenti-btn" class="btn btn-secondary">Entra nell'area smarriti</button>
+        </div>
         <div id="home-con">
             <div id="stazioni-container">
                 <!-- Qui verranno visualizzate le stazioni -->
             </div>
         </div>
 
-        <div id = "operazioni-con">
-
-        </div>
+        <div id="operazioni-con"></div>
         <a href="../gestore_bici.html" id="gestore_bici" class="btn btn-primary">Vai al gestore</a>
-        <div id = "map"></div>
+        <div id="map"></div>
     </div>
     
     <!-- jQuery -->
@@ -57,5 +72,6 @@
 
     <!-- Custom JS -->
     <script src="../script/home.js"></script>
+    
 </body>
 </html>

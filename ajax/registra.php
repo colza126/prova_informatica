@@ -26,7 +26,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $id = $_POST["id"];
     
     // Prepara la query SQL utilizzando una prepared statement
-    $sql = "INSERT INTO utente (mail, password, codice_fiscale, ID_indirizzo, admin) VALUES (?, ?, ?, ?, 0)";
+    $sql = "INSERT INTO utente (mail, password, numero_tessera, ID_indirizzo, admin,carta_attiva) VALUES (?, ?, ?, ?, 0,1)";
     $stmt = $conn->prepare($sql);
     
     // Verifica se la preparazione della query è avvenuta con successo
